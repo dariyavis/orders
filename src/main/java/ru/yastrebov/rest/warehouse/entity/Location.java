@@ -7,17 +7,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "location")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Location {
+public class  Location {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "storagerate")
-    private Integer storagerate;
+    @Column(name = "ratemin")
+    private Integer ratemin;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "ratemax")
+    private Integer ratemax;
+
 
     public Integer getId() {
         return id;
@@ -27,19 +28,19 @@ public class Location {
         this.id = id;
     }
 
-    public Integer getStoragerate() {
-        return storagerate;
+    public Integer getRatemin() {
+        return ratemin;
     }
 
-    public void setStoragerate(Integer storagerate) {
-        this.storagerate = storagerate;
+    public void setRatemin(Integer ratemin) {
+        this.ratemin = ratemin;
     }
 
-    public String getName() {
-        return name;
+    public Integer getRatemax() {
+        return ratemax;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRatemax(Integer ratemax) {
+        this.ratemax = ratemax;
     }
 }

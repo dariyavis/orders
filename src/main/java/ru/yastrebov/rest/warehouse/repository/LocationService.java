@@ -1,4 +1,4 @@
-package ru.yastrebov.rest.warehouse.service;
+package ru.yastrebov.rest.warehouse.repository;
 
 import ru.yastrebov.rest.warehouse.entity.Location;
 

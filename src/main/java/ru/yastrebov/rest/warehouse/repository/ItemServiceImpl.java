@@ -1,8 +1,7 @@
-package ru.yastrebov.rest.warehouse.service;
+package ru.yastrebov.rest.warehouse.repository;
 
 import org.springframework.stereotype.Service;
 import ru.yastrebov.rest.warehouse.entity.Item;
-import ru.yastrebov.rest.warehouse.repository.ItemRepository;
 
 import java.util.List;
 

@@ -23,8 +23,6 @@ public class Item {
     @Column(name = "art")
     private Boolean art;
 
-    @Column(name = "release")
-    private Date release;
 
     public Integer getId() {
         return id;
@@ -58,11 +56,4 @@ public class Item {
         this.art = art;
     }
 
-    public Date getRelease() {
-        return release;
-    }
-
-    public void setRelease(Date release) {
-        this.release = release;
-    }
 }
