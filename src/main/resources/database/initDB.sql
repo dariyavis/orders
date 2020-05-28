@@ -1,13 +1,23 @@
-CREATE TABLE IF NOT EXISTS items
+DROP TABLE IF EXISTS items;
+CREATE TABLE items
 (
     id    SERIAL PRIMARY KEY ,
     volume  INTEGER NOT NULL ,
     value INTEGER NOT NULL ,
     art BOOLEAN NOT NULL
 );
-CREATE TABLE IF NOT EXISTS locations
+DROP TABLE IF EXISTS locations;
+CREATE TABLE locations
 (
     id    SERIAL PRIMARY KEY ,
     ratemin  INTEGER NOT NULL ,
     ratemax  INTEGER NOT NULL
 );
+
+INSERT INTO items (id, volume, value, art) VALUES
+(1, '11', '111', true),
+(2, '22', '222', false);
+
+INSERT INTO locations (id, ratemin, ratemax) VALUES
+(1, '100', '2000'),
+(2, '20', '1230');
