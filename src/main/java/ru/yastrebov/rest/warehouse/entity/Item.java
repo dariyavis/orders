@@ -1,4 +1,4 @@
-package ru.yastrebov.rest.warehouse.model;
+package ru.yastrebov.rest.warehouse.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

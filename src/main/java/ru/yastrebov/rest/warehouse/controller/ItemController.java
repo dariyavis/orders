@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.yastrebov.rest.warehouse.model.Item;
+import ru.yastrebov.rest.warehouse.entity.Item;
 import ru.yastrebov.rest.warehouse.service.ItemService;
 
 import java.util.List;

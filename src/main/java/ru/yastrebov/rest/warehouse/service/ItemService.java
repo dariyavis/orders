@@ -1,6 +1,6 @@
 package ru.yastrebov.rest.warehouse.service;
 
-import ru.yastrebov.rest.warehouse.model.Item;
+import ru.yastrebov.rest.warehouse.entity.Item;
 
 import java.util.List;
 

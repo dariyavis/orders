@@ -6,3 +6,9 @@ CREATE TABLE IF NOT EXISTS items
     art BOOLEAN NOT NULL ,
     release date NOT NULL
 );
+CREATE TABLE IF NOT EXISTS locations
+(
+    id    SERIAL PRIMARY KEY ,
+    storagerate  INTEGER NOT NULL ,
+    name VARCHAR NOT NULL
+);
