@@ -54,7 +54,7 @@ public class CalculateService {
         System.out.println("Total: " + total);
 
 
-        return 0;
+        return total;
     }
 }
 //http://localhost:8080/invoice-preview?itemId=1&storeId=1&expected_release=2020-06-06
