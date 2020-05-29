@@ -1,23 +1,23 @@
 package ru.yastrebov.rest.warehouse.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ru.yastrebov.rest.warehouse.entity.Item;
-import ru.yastrebov.rest.warehouse.repository.ItemRepository;
+import ru.yastrebov.rest.warehouse.entity.Location;
 import ru.yastrebov.rest.warehouse.repository.ItemService;
-import ru.yastrebov.rest.warehouse.repository.ItemServiceImpl;
 import ru.yastrebov.rest.warehouse.repository.LocationService;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.Locale;
 
 @Service
 public class CalculateService {
 
-    private final Integer ADMIN_TAX = 100;
-
+    private static final Integer ADMIN_TAX = 100;
+    private static final Double INSURANCE = 0.1;
 
     @Autowired
     private ItemService itemService;
@@ -26,37 +26,47 @@ public class CalculateService {
 
     public double calculate(Integer itemId, Integer storeId, String expected_release) {
 
-       double insuranceAmount = itemService.read(itemId).getValue() * 0.1;
-       double storageAmount;
+        Item item = itemService.read(itemId);
+        Location location = locationService.read(storeId);
 
-        if ((itemService.read(itemId).getVolume() < 1000) && itemService.read(itemId).getArt()==false) {
-              storageAmount = locationService.read(storeId).getRatemin();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = formatter.parse(expected_release);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        else   {
-              storageAmount = locationService.read(storeId).getRatemax();
+        return this.calculate(item, location, new Date(),  date);
+    }
+
+    public double calculate(Item item, Location location, Date today, Date date) {
+
+        double storageAmount;
+
+        if ((item.getVolume() < 1000) && !item.getArt()) {
+            storageAmount = location.getRatemin();
+        } else {
+            storageAmount = location.getRatemax();
+
         }
+        long noOfDaysBetween = ChronoUnit.DAYS.between(today.toInstant(), date.toInstant());
 
-        String dateBeforeString = "2020-05-29";
-        String dateAfterString = expected_release;
-
-        LocalDate dateBefore = LocalDate.parse(dateBeforeString);
-        LocalDate dateAfter = LocalDate.parse(dateAfterString);
-        long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
-
-       double total = (storageAmount + insuranceAmount) * (noOfDaysBetween) + ADMIN_TAX;
-        System.out.println("количество дней: "+ noOfDaysBetween);
-        System.out.println("insuranceAmount: "+insuranceAmount);
-        System.out.println("storageAmount: "+storageAmount);
-        System.out.println("ADMIN_TAX: "+ADMIN_TAX);
-        System.out.println("value: "+itemService.read(itemId).getValue());
-        System.out.println("volume: "+itemService.read(itemId).getVolume());
-        System.out.println("Art: "+ itemService.read(itemId).getArt());
-        System.out.println("Total: " + total);
-
-
+        double insuranceAmount = item.getValue() * INSURANCE;
+        double total = (storageAmount + insuranceAmount) * (noOfDaysBetween + 1) + ADMIN_TAX;
+        System.out.println("number of days: " + noOfDaysBetween);
+        System.out.println("insuranceAmount:" + insuranceAmount);
+        System.out.println("storageAmount:" + storageAmount);
+        System.out.println("ADMIN_TAX:" + ADMIN_TAX);
+        System.out.println("value:" + item.getValue());
+        System.out.println("volume:" + item.getVolume());
+        System.out.println("Art:" + item.getArt());
+        System.out.println("insuranceAmount:" + insuranceAmount);
+        System.out.println("total: " + total);
         return total;
     }
+
 }
+
 //http://localhost:8080/invoice-preview?itemId=1&storeId=1&expected_release=2020-06-06
 //jobId=1
 //storeId=1
