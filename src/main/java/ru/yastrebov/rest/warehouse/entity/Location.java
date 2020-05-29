@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "location")
+@Table(name = "locations")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class  Location {
     @Id
@@ -42,5 +42,14 @@ public class  Location {
 
     public void setRatemax(Integer ratemax) {
         this.ratemax = ratemax;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", ratemin=" + ratemin +
+                ", ratemax=" + ratemax +
+                '}';
     }
 }

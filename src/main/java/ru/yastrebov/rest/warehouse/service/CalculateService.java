@@ -9,6 +9,7 @@ import ru.yastrebov.rest.warehouse.repository.LocationService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,7 +30,7 @@ public class CalculateService {
         Item item = itemService.read(itemId);
         Location location = storeId == null?locationService.read(STORE_ID_DEFAULT):locationService.read(storeId);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
         try {
             date = formatter.parse(expected_release);
@@ -40,6 +41,30 @@ public class CalculateService {
     }
 
     public double calculate(Item item,Location location, Date today, Date date) {
-        return 0;
+
+        long noOfDaysBetween = ChronoUnit.DAYS.between(today.toInstant(), date.toInstant());
+
+        double insuranceAmount = item.getValue() * 0.1;
+        double storageAmount;
+
+        if (item.getVolume() < 1000 && !item.getArt()) {
+            storageAmount = location.getRatemin();
+        }
+        else   {
+            storageAmount = location.getRatemax();
+        }
+
+        double total = (storageAmount + insuranceAmount) * (noOfDaysBetween) + ADMIN_TAX;
+
+        System.out.println("количество дней: "+ noOfDaysBetween);
+        System.out.println("insuranceAmount: "+insuranceAmount);
+        System.out.println("storageAmount: "+storageAmount);
+        System.out.println("ADMIN_TAX: "+ADMIN_TAX);
+        System.out.println("value: "+item.getValue());
+        System.out.println("volume: "+item.getVolume());
+        System.out.println("Art: "+ item.getArt());
+        System.out.println("Total: " + total);
+
+        return total;
     }
 }

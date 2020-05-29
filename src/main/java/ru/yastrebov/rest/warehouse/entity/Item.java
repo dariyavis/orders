@@ -56,4 +56,13 @@ public class Item {
         this.art = art;
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", volume=" + volume +
+                ", value=" + value +
+                ", art=" + art +
+                '}';
+    }
 }
