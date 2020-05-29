@@ -1,3 +1,3 @@
--- INSERT INTO items VALUES
--- (1, 'Vassily Petrov', 'vpetrov@jr.com', '+7 (191) 322-22-33)'),
--- (2, 'Pjotr Vasechkin', 'pvasechkin@jr.com', '+7 (191) 223-33-22)');
+-- INSERT INTO items (id, volume, value, art) VALUES
+-- (1, '11', '111', true),
+-- (2, '22', '222', false);
