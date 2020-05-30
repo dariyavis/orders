@@ -1,6 +1,8 @@
 package ru.yastrebov.rest.warehouse.service;
 
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.yastrebov.rest.warehouse.entity.Item;
 import ru.yastrebov.rest.warehouse.entity.Location;
@@ -16,8 +18,12 @@ import java.util.Locale;
 @Service
 public class CalculateService {
 
-    private final Integer ADMIN_TAX = 100;
-    private final Integer STORE_ID_DEFAULT = 1;
+    @Value("${property.admin_tax}")
+    private Integer ADMIN_TAX;
+    @Value("${property.store_id_default}")
+    private Integer STORE_ID_DEFAULT;
+    @Value("${property.volume_level}")
+    private Integer VOLUME_LEVEL;
 
     @Autowired
     private ItemService itemService;
@@ -50,14 +56,16 @@ public class CalculateService {
         double insuranceAmount = item.getValue() * 0.1;
         double storageAmount;
 
-        if (item.getVolume() < 1000 && !item.getArt()) {
+        if (item.getVolume() < VOLUME_LEVEL && !item.getArt()) {
             storageAmount = location.getRatemin();
         }
         else   {
             storageAmount = location.getRatemax();
         }
 
-        double total = (storageAmount + insuranceAmount) * (noOfDaysBetween) + ADMIN_TAX;
+        double total = Precision.round(
+                (storageAmount + insuranceAmount) * (noOfDaysBetween) + ADMIN_TAX,
+                2);
 
         System.out.println("количество дней: "+ noOfDaysBetween);
         System.out.println("insuranceAmount: "+insuranceAmount);

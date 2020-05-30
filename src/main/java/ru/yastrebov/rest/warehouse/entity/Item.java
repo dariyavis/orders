@@ -3,7 +3,6 @@ package ru.yastrebov.rest.warehouse.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "items")
@@ -22,6 +21,9 @@ public class Item {
 
     @Column(name = "art")
     private Boolean art;
+
+    public Item() {
+    }
 
     public Item(Integer id, Integer volume, Integer value, Boolean art) {
         this.id = id;
