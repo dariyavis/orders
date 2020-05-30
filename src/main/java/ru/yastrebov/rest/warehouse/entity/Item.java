@@ -23,6 +23,12 @@ public class Item {
     @Column(name = "art")
     private Boolean art;
 
+    public Item(Integer id, Integer volume, Integer value, Boolean art) {
+        this.id = id;
+        this.volume = volume;
+        this.value = value;
+        this.art = art;
+    }
 
     public Integer getId() {
         return id;

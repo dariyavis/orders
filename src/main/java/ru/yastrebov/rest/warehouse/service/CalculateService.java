@@ -41,8 +41,11 @@ public class CalculateService {
     }
 
     public double calculate(Item item,Location location, Date today, Date date) {
-
         long noOfDaysBetween = ChronoUnit.DAYS.between(today.toInstant(), date.toInstant());
+        return this.calculate(item, location, noOfDaysBetween);
+    }
+
+    public double calculate(Item item,Location location, long noOfDaysBetween) {
 
         double insuranceAmount = item.getValue() * 0.1;
         double storageAmount;

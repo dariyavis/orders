@@ -19,6 +19,11 @@ public class  Location {
     @Column(name = "ratemax")
     private Integer ratemax;
 
+    public Location(Integer id, Integer ratemin, Integer ratemax) {
+        this.id = id;
+        this.ratemin = ratemin;
+        this.ratemax = ratemax;
+    }
 
     public Integer getId() {
         return id;
