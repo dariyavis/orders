@@ -17,7 +17,8 @@ public class WarehouseApplicationTests {
     private Item item;
     private Location location;
     private long number_of_days;
-    private int ADMIN_TAX = 100;
+    private int admin_tax = 100;
+    private int volume_level = 1000;
     private double expected = 16188.8;
 
     private CalculateService calculateService;
@@ -34,7 +35,7 @@ public class WarehouseApplicationTests {
     @Test
     public void calculateTest() {
         System.out.println("test...");
-        double actual = calculateService.calculate(item,location,number_of_days);
+        double actual = calculateService.calculate(item,location,number_of_days, admin_tax, volume_level);
 
         assertEquals(expected, actual);
     }
